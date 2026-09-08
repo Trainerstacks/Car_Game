@@ -1,0 +1,102 @@
+---
+# Kubernetes Deployment for TrainerStacks Car Racing Game
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trainerstacks-cargame-deployment
+  namespace: default
+  labels:
+    app: trainerstacks-cargame
+    version: "1.0.0"
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: trainerstacks-cargame
+  template:
+    metadata:
+      labels:
+        app: trainerstacks-cargame
+    spec:
+      containers:
+      - name: cargame-app
+        image: trainerstacks-cargame:1.0.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+          name: http
+        env:
+        - name: JAVA_OPTS
+          value: "-Xms512m -Xmx1024m"
+        - name: SPRING_PROFILES_ACTIVE
+          value: "prod"
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1024Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8080
+          initialDelaySeconds: 40
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8080
+          initialDelaySeconds: 20
+          periodSeconds: 10
+
+---
+# Kubernetes Service for Car Game Application
+apiVersion: v1
+kind: Service
+metadata:
+  name: trainerstacks-cargame-service
+  namespace: default
+  labels:
+    app: trainerstacks-cargame
+spec:
+  type: LoadBalancer
+  selector:
+    app: trainerstacks-cargame
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+    protocol: TCP
+
+---
+# Horizontal Pod Autoscaler
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: trainerstacks-cargame-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: trainerstacks-cargame-deployment
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 70
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Car Racing Game</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: #1a1a1a;
+            color: white;
+            min-height: 100vh;
+        }
+        .navbar {
+            background: #222;
+        }
+        .stat-card {
+            background: #333;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+        .stat-label {
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-top: 10px;
+        }
+        .btn-play {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+        .btn-play:hover {
+            transform: scale(1.05);
+            color: white;
+        }
+        .car-badge {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #667eea;
+            border-radius: 20px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand text-white fw-bold" href="/">🏎️ Car Racing Game</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="ms-auto">
+                    <span class="text-white me-3">Welcome, <strong th:text="${player.username}"></strong>!</span>
+                    <a href="/logout" class="btn btn-sm btn-danger">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+        <div class="row mb-5">
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-value" th:text="${player.totalScore}">0</div>
+                    <div class="stat-label">Total Score</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-value" th:text="${player.gamesPlayed}">0</div>
+                    <div class="stat-label">Games Played</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-value" th:text="${player.gamesWon}">0</div>
+                    <div class="stat-label">Games Won</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-card">
+                    <div class="stat-value" th:text="${player.gamesPlayed > 0 ? (player.gamesWon * 100 / player.gamesPlayed) : 0}">0</div>
+                    <div class="stat-label">Win Rate %</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-5">
+            <div class="col-md-6">
+                <div style="background: #333; padding: 25px; border-radius: 10px;">
+                    <h4 class="mb-3">Your Car</h4>
+                    <div style="font-size: 3rem; margin: 20px 0;">
+                        <span th:if="${player.carType} == 'sports'">🏎️</span>
+                        <span th:if="${player.carType} == 'truck'">🚛</span>
+                        <span th:if="${player.carType} == 'sedan'">🚗</span>
+                        <span th:if="${player.carType} == 'formula1'">🏁</span>
+                    </div>
+                    <p class="car-badge" th:text="${player.carType}"></p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div style="background: #333; padding: 25px; border-radius: 10px; text-align: center;">
+                    <h4 class="mb-4">Play Now</h4>
+                    <p>Select difficulty and start racing!</p>
+                    <a href="/game/play?difficulty=easy" class="btn btn-play m-2">Easy</a>
+                    <a href="/game/play?difficulty=medium" class="btn btn-play m-2">Medium</a>
+                    <a href="/game/play?difficulty=hard" class="btn btn-play m-2">Hard</a>
+                    <a href="/game/play?difficulty=extreme" class="btn btn-play m-2">Extreme</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div style="background: #333; padding: 25px; border-radius: 10px;">
+                    <h4 class="mb-3">Quick Links</h4>
+                    <a href="/game/stats" class="btn btn-info me-2">View Statistics</a>
+                    <a href="/leaderboard" class="btn btn-warning">Global Leaderboard</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
