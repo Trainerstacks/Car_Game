@@ -313,19 +313,6 @@ docker run --rm trainerstacks-cargame:1.0.0 mvn test
 - Check data.sql syntax
 - Verify schema creation
 
-## 📚 Learning Resources
-
-**For Beginners:**
-- Spring Boot Getting Started: https://spring.io/quickstart
-- HTML5 Canvas: https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API
-- Bootstrap CSS: https://getbootstrap.com/docs/5.3/
-
-**For Developers:**
-- Spring Boot Docs: https://spring.io/projects/spring-boot
-- Spring Data JPA: https://spring.io/projects/spring-data-jpa
-- Docker Documentation: https://docs.docker.com/
-- Kubernetes Docs: https://kubernetes.io/docs/
-
 ## 🤝 Contributing
 
 Contributions are welcome! Feel free to:
@@ -339,22 +326,6 @@ Contributions are welcome! Feel free to:
 Open Source - Free to use and modify
 
 ## 🎓 Educational Use
-
-Perfect for teaching:
-- ✅ Spring Boot Development
-- ✅ Full-Stack Web Development
-- ✅ Database Design
-- ✅ Game Development Basics
-- ✅ DevOps (Docker/Kubernetes)
-- ✅ Java Best Practices
-- ✅ Web UI/UX
-
-## 👨‍💻 Support
-
-For issues and questions:
-- Email: support@trainerstacks.com
-- Forum: https://trainerstacks.com/forum
-- Issues: GitHub Issues
 
 ## 📌 Version History
 
